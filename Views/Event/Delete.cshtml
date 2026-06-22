@@ -1,0 +1,32 @@
+﻿@model Infrastructure.Models.Event
+
+@{
+    ViewData["Title"] = "Excluir Evento";
+}
+
+<div class="container mt-5 fade-in-up">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card-soft p-5 text-center" style="border: 1px solid #dc3545;">
+                <div class="d-inline-flex bg-danger bg-opacity-10 p-3 rounded-circle mb-4 border border-danger border-opacity-25">
+                    <span class="fs-1">⚠️</span>
+                </div>
+
+                <h3 class="fw-bold text-danger mb-3">Confirmar Exclusão</h3>
+                <p class="text-muted">Tem certeza de que deseja excluir permanentemente o evento abaixo? Esta ação não poderá ser desfeita.</p>
+
+                <div class="bg-light p-3 rounded-3 mb-4 text-start border">
+                    <p class="mb-1"><strong>Título:</strong> @Model.Title</p>
+                    <p class="mb-1"><strong>Data:</strong> @Model.Date</p>
+                    <p class="mb-0"><strong>Status:</strong> @Model.Status</p>
+                </div>
+
+                <form asp-action="ConfirmDelete" method="post" class="d-flex gap-2 justify-content-center">
+                    <input type="hidden" name="id" value="@Model.Id" />
+                    <a asp-action="AdminIndex" class="btn btn-outline-secondary px-4 fw-bold rounded-pill">Cancelar</a>
+                    <button type="submit" class="btn btn-danger px-4 fw-bold rounded-pill">Sim, Excluir Evento</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

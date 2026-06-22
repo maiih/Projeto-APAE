@@ -1,0 +1,38 @@
+﻿@{
+    ViewData["Title"] = "Acesso Restrito - APAE";
+}
+
+<div class="container mt-5 fade-in-up">
+    <div class="row justify-content-center">
+        <div class="col-md-5 col-lg-4 text-center">
+
+            <!-- Cabeçalho com Ícone Padronizado -->
+            <div class="mb-4">
+                <div class="d-inline-flex bg-apae-green bg-opacity-10 p-3 rounded-circle mb-3 border border-success border-opacity-25">
+                    <span class="fs-2">🔒</span>
+                </div>
+                <h3 class="fw-bold text-apae-blue">Acesso Restrito</h3>
+                <p class="text-muted small">Área exclusiva para a gestão institucional</p>
+            </div>
+
+            <!-- Container de Login com Borda Verde -->
+            <div class="card-soft p-4 p-md-5 text-start" style="border: 1px solid var(--apae-green);">
+                <form asp-action="Login" method="post">
+                    <div class="form-group mb-4 text-center">
+                        <label class="form-label fw-bold text-muted small text-uppercase">Usuário</label>
+                        <input type="text" name="username" class="form-control-soft w-100 text-center" placeholder="Digite a credencial" required autocomplete="off" />
+                    </div>
+                    <button type="submit" class="btn btn-apae-primary w-100 fw-bold py-2 rounded-pill mt-2">Acessar Painel</button>
+                </form>
+            </div>
+
+            <!-- Retorno Seguro -->
+            <div class="mt-4">
+                <a asp-controller="Home" asp-action="Index" class="text-muted text-decoration-none small fw-semibold hover-success">
+                    &larr; Voltar ao Portal
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>

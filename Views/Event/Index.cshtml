@@ -1,0 +1,33 @@
+﻿@model List<Infrastructure.Models.Event>
+
+@{
+    ViewData["Title"] = "Eventos Solidários";
+}
+
+<div class="container mt-5 fade-in-up">
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <h2 class="fw-bold text-apae-blue mb-0">Próximos Eventos</h2>
+    </div>
+
+    <div class="row g-4">
+        @foreach (var ev in Model)
+        {
+            <div class="col-md-6">
+                <div class="card-soft p-4 h-100" style="border: 1px solid var(--apae-green);">
+                    <h4 class="fw-bold text-apae-blue mb-2">@ev.Title</h4>
+
+                    <div class="d-flex gap-3 mb-3 text-muted small fw-semibold">
+                        <span>📅 Data: @ev.Date</span>
+                        <span>✅ Status: @ev.Status</span>
+                    </div>
+
+                    <p class="text-secondary mb-4">@ev.Description</p>
+
+                    <a asp-controller="Collaborator" asp-action="Create" asp-route-eventId="@ev.Id" class="btn btn-apae-primary px-4 py-2 rounded-pill mt-auto d-inline-block">
+                        Quero ser Voluntário
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

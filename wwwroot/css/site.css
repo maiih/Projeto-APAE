@@ -1,0 +1,108 @@
+:root {
+    /* Paleta extraída do Logotipo APAE */
+    --apae-green: #3b934b;
+    --apae-green-hover: #2d7a3a;
+    --apae-yellow: #f4b942;
+    --apae-blue: #1a365d;
+    --bg-soft: #f8f9fa;
+}
+
+body {
+    background-color: var(--bg-soft);
+    color: var(--apae-blue);
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+/* Tipografia e Títulos */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+/* Botões Customizados */
+.btn-apae-primary {
+    background-color: var(--apae-green);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+    .btn-apae-primary:hover {
+        background-color: var(--apae-green-hover);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(59, 147, 75, 0.3);
+    }
+
+.btn-apae-outline {
+    background-color: transparent;
+    border: 2px solid var(--apae-green);
+    color: var(--apae-green);
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+    .btn-apae-outline:hover {
+        background-color: var(--apae-green);
+        color: white;
+    }
+
+/* Cards e Contêineres */
+.card-soft {
+    background: white;
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+    transition: all 0.3s ease;
+}
+
+    .card-soft:hover {
+        box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+    }
+
+/* Entradas de Formulário */
+.form-control-soft {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background-color: #fdfdfd;
+    padding: 0.75rem 1rem;
+    color: var(--apae-blue);
+}
+
+    .form-control-soft:focus {
+        border-color: var(--apae-green);
+        box-shadow: 0 0 0 0.25rem rgba(59, 147, 75, 0.2);
+        background-color: white;
+    }
+
+/* Utilitários Visuais */
+.text-apae-green {
+    color: var(--apae-green);
+}
+
+.bg-apae-green {
+    background-color: var(--apae-green);
+    color: white;
+}
+
+.bg-apae-yellow {
+    background-color: var(--apae-yellow);
+    color: var(--apae-blue);
+}
+
+/* Animações base */
+.fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

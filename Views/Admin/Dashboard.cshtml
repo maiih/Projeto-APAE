@@ -1,0 +1,37 @@
+﻿@{
+    ViewData["Title"] = "Painel Administrativo";
+}
+
+<div class="container mt-5 fade-in-up">
+    <div class="d-flex justify-content-between align-items-center mb-5 border-bottom pb-3">
+        <h2 class="fw-bold text-apae-green mb-0">Painel de Controle - APAE</h2>
+        <a asp-controller="Event" asp-action="Index" class="btn btn-outline-danger px-4 rounded-pill fw-semibold">Sair</a>
+    </div>
+
+    <div class="row mt-4 justify-content-center g-4">
+        <div class="card-soft text-center p-5 h-100" style="border: 1px solid var(--apae-green);">
+            <div class="bg-apae-green bg-opacity-10 rounded-circle d-inline-flex p-3 mb-4">
+                <span class="fs-2">📅</span>
+            </div>
+            <h4 class="fw-bold text-apae-blue mb-3">Gestão de Eventos</h4>
+            <p class="text-muted mb-4">Crie novos eventos, edite informações ou exclua registros do portal.</p>
+
+            <!-- Botões de Ação Dupla -->
+            <div class="d-flex flex-column gap-2">
+                <a asp-controller="Event" asp-action="Create" class="btn btn-apae-primary w-100 fw-bold py-2 rounded-pill">Criar Novo Evento</a>
+                <a asp-controller="Event" asp-action="AdminIndex" class="btn btn-apae-outline w-100 fw-bold py-2 rounded-pill">Gerenciar Eventos</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4 justify-content-center g-4">
+            <div class="card-soft text-center p-5 h-100" style="border: 1px solid var(--apae-green);">
+                <div class="bg-apae-yellow bg-opacity-25 rounded-circle d-inline-flex p-3 mb-4">
+                    <span class="fs-2">👥</span>
+                </div>
+                <h4 class="fw-bold text-apae-blue mb-3">Gestão de Voluntários</h4>
+                <p class="text-muted mb-4">Visualize a lista de colaboradores inscritos, tipos de ajuda e status de contato.</p>
+                <a asp-controller="Collaborator" asp-action="Index" class="btn btn-apae-outline w-100 fw-bold py-2 rounded-pill">Listar Colaboradores</a>
+            </div>
+        </div>
+    </div>

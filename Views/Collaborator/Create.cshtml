@@ -1,0 +1,78 @@
+﻿@model Infrastructure.Models.Collaborator
+@using Core.Enums
+
+@{
+    ViewData["Title"] = "Cadastro de Voluntário";
+}
+
+<div class="container mt-4 fade-in-up">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card-soft overflow-hidden" style="border: 1px solid var(--apae-green);">
+                <div class="bg-apae-green p-4 text-center">
+                    <h3 class="mb-0 text-white fw-bold">Cadastro de Voluntário</h3>
+                    <p class="text-white-50 mb-0 mt-1">Preencha seus dados para confirmar a presença no evento selecionado.</p>
+                </div>
+
+                <div class="p-5">
+                    <form asp-action="Create" method="post">
+                        <input type="hidden" asp-for="EventId" />
+
+                        <div class="row g-5">
+                            <div class="col-md-6 border-end-md">
+                                <h5 class="text-apae-green mb-4">Seus Dados Pessoais</h5>
+
+                                <div class="mb-4">
+                                    <label asp-for="Name" class="form-label fw-bold text-muted small text-uppercase">Nome Completo</label>
+                                    <input asp-for="Name" class="form-control-soft w-100" required placeholder="Ex: João da Silva" />
+                                </div>
+
+                                <div class="mb-4">
+                                    <label asp-for="Email" class="form-label fw-bold text-muted small text-uppercase">E-mail</label>
+                                    <input asp-for="Email" type="email" class="form-control-soft w-100" required placeholder="joao@email.com" />
+                                </div>
+
+                                <div class="mb-4">
+                                    <label asp-for="Phone" class="form-label fw-bold text-muted small text-uppercase">Telefone / WhatsApp</label>
+                                    <input asp-for="Phone" class="form-control-soft w-100" required placeholder="(00) 00000-0000" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <h5 class="text-apae-green mb-2">Como você deseja ajudar?</h5>
+                                <p class="text-muted small mb-4">Selecione todas as opções que desejar.</p>
+
+                                <div class="d-flex flex-column gap-3">
+                                    <div class="form-check bg-apae-yellow bg-opacity-25 p-3 rounded-3 border border-warning border-opacity-25">
+                                        <input class="form-check-input ms-1" type="checkbox" name="HelpTypes" value="@HelpType.Armazenamento" id="help1">
+                                        <label class="form-check-label ms-2 fw-semibold" for="help1">Armazenamento</label>
+                                    </div>
+
+                                    <div class="form-check bg-apae-yellow bg-opacity-25 p-3 rounded-3 border border-warning border-opacity-25">
+                                        <input class="form-check-input ms-1" type="checkbox" name="HelpTypes" value="@HelpType.MaoDeObra" id="help2">
+                                        <label class="form-check-label ms-2 fw-semibold" for="help2">Mão de obra</label>
+                                    </div>
+
+                                    <div class="form-check bg-apae-yellow bg-opacity-25 p-3 rounded-3 border border-warning border-opacity-25">
+                                        <input class="form-check-input ms-1" type="checkbox" name="HelpTypes" value="@HelpType.DoacaoFinanceira" id="help3">
+                                        <label class="form-check-label ms-2 fw-semibold" for="help3">Doação financeira</label>
+                                    </div>
+
+                                    <div class="form-check bg-apae-yellow bg-opacity-25 p-3 rounded-3 border border-warning border-opacity-25">
+                                        <input class="form-check-input ms-1" type="checkbox" name="HelpTypes" value="@HelpType.Outros" id="help4">
+                                        <label class="form-check-label ms-2 fw-semibold" for="help4">Outros recursos</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-3 mt-5 pt-4 border-top">
+                            <a asp-controller="Event" asp-action="Index" class="btn text-muted fw-bold px-4 py-2">Cancelar</a>
+                            <button type="submit" class="btn btn-apae-primary px-5 py-2">Confirmar Inscrição</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

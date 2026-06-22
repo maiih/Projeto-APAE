@@ -1,0 +1,161 @@
+@using System.Linq
+@model IEnumerable<Infrastructure.Models.Collaborator>
+
+@{
+    ViewData["Title"] = "Gestão de Voluntários";
+    var events = ViewBag.Events as List<Infrastructure.Models.Event>;
+}
+
+<div class="container mt-4 fade-in-up">
+    <div class="d-flex justify-content-between align-items-end mb-4">
+        <div>
+            <h2 class="text-apae-blue mb-1">Voluntários Cadastrados</h2>
+            <p class="text-muted mb-0">Controle de contato e recursos oferecidos.</p>
+        </div>
+        <a asp-controller="Admin" asp-action="Dashboard" class="btn btn-apae-outline btn-sm px-4 rounded-pill">Voltar ao Painel</a>
+    </div>
+
+    <!-- Barra de Filtros -->
+    <div class="card-soft p-3 mb-4" style="border: 1px solid var(--apae-green);">
+        <form method="get" asp-action="Index" class="row g-3 align-items-end">
+
+            <div class="col-md-4">
+                <label class="form-label text-muted small fw-bold text-uppercase">Filtrar por Evento</label>
+                <select name="eventId" class="form-select form-control-soft">
+                    <option value="">Todos os Eventos</option>
+                    @if (events != null)
+                    {
+                        foreach (var ev in events)
+                        {
+                            if (ViewBag.CurrentEventFilter == ev.Id)
+                            {
+                                <option value="@ev.Id" selected>@ev.Title</option>
+                            }
+                            else
+                            {
+                                <option value="@ev.Id">@ev.Title</option>
+                            }
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label text-muted small fw-bold text-uppercase">Filtrar por Ajuda</label>
+                <select name="helpType" class="form-select form-control-soft">
+                    <option value="">Qualquer tipo de ajuda</option>
+                    <option value="Armazenamento" selected="@(ViewBag.CurrentHelpFilter == "Armazenamento")">Armazenamento</option>
+                    <option value="MaoDeObra" selected="@(ViewBag.CurrentHelpFilter == "MaoDeObra")">Mão de Obra</option>
+                    <option value="DoacaoFinanceira" selected="@(ViewBag.CurrentHelpFilter == "DoacaoFinanceira")">Doação Financeira</option>
+                    <option value="Outros" selected="@(ViewBag.CurrentHelpFilter == "Outros")">Outros Recursos</option>
+                </select>
+            </div>
+
+            <div class="col-md-4 d-flex gap-2">
+                <button type="submit" class="btn btn-apae-primary px-4 fw-bold w-50">Aplicar</button>
+                <a asp-action="Index" class="btn btn-apae-outline px-4 fw-bold w-50">Limpar</a>
+            </div>
+
+        </form>
+    </div>
+
+    <!-- Tabela de Dados -->
+    <div class="card-soft overflow-hidden" style="border: 1px solid var(--apae-green);">
+        <form asp-action="SendSelectedEmails" method="post" class="m-0">
+            <input type="hidden" name="eventId" value="@ViewBag.CurrentEventFilter" />
+            <input type="hidden" name="helpType" value="@ViewBag.CurrentHelpFilter" />
+
+            <div class="p-3 border-bottom bg-white d-flex flex-wrap gap-2 align-items-center justify-content-end">
+                <button type="submit" formaction='@Url.Action("SendSelectedEmails", "Collaborator")' class="btn btn-apae-primary fw-bold">
+                    Enviar selecionados
+                </button>
+                <button type="submit" formaction='@Url.Action("SendAllEmails", "Collaborator")' class="btn btn-success fw-bold">
+                    Enviar para todos
+                </button>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="text-muted small text-uppercase py-3 ps-4" style="width: 90px;">Selecionar</th>
+                            <th class="text-muted small text-uppercase py-3">Nome do Voluntário</th>
+                            <th class="text-muted small text-uppercase py-3">Contato</th>
+                            <th class="text-muted small text-uppercase py-3">Evento Alvo</th>
+                            <th class="text-muted small text-uppercase py-3">Recurso / Ajuda</th>
+                            <th class="text-muted small text-uppercase py-3 text-center pe-4">E-mail</th>
+                        </tr>
+                    </thead>
+                    <tbody class="border-top-0">
+                        @if (!Model.Any())
+                        {
+                            <tr>
+                                <td colspan="6" class="text-center text-muted py-5">
+                                    <span class="d-block mb-2 fs-4">📋</span>
+                                    Nenhum colaborador encontrado com estes filtros.
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var colab in Model)
+                            {
+                                var eventName = events?.FirstOrDefault(e => e.Id == colab.EventId)?.Title ?? "Evento Excluído";
+
+                                var helpTypesText = colab.HelpTypes != null && colab.HelpTypes.Any()
+                                    ? string.Join(", ", colab.HelpTypes.Select(h =>
+                                        h == Core.Enums.HelpType.MaoDeObra ? "Mão de obra" :
+                                        h == Core.Enums.HelpType.DoacaoFinanceira ? "Doação financeira" :
+                                        h == Core.Enums.HelpType.Armazenamento ? "Armazenamento" :
+                                        h.ToString()))
+                                    : "Não informado";
+
+                                <tr>
+                                    <td class="ps-4 text-center align-middle">
+                                        <input class="form-check-input"
+                                               type="checkbox"
+                                               name="selectedIds"
+                                               value="@colab.Id"
+                                               @(colab.EmailSent ? "disabled" : "") />
+                                    </td>
+                                    <td class="ps-4">
+                                        <span class="fw-bold text-dark">@colab.Name</span>
+                                    </td>
+                                    <td>
+                                        <span class="d-block text-secondary small">@colab.Email</span>
+                                        <span class="d-block text-secondary small">@colab.Phone</span>
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-apae-yellow fw-semibold text-dark rounded-pill px-3">@eventName</span>
+                                    </td>
+                                    <td>
+                                        <span class="text-secondary fw-medium">@helpTypesText</span>
+                                    </td>
+                                    <td class="text-center pe-4">
+                                        <div class="d-flex flex-column align-items-center gap-2">
+                                            @if (colab.EmailSent)
+                                            {
+                                                <span class="badge bg-success">Enviado</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-secondary">Pendente</span>
+                                                <button type="submit"
+                                                        formaction='@Url.Action("SendEmail", "Collaborator")'
+                                                        class="btn btn-sm btn-primary"
+                                                        name="id"
+                                                        value="@colab.Id">
+                                                    Enviar E-mail
+                                                </button>
+                                            }
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </form>
+    </div>
+</div>

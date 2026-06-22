@@ -1,0 +1,60 @@
+﻿@model List<Infrastructure.Models.Event>
+
+@{
+    ViewData["Title"] = "Gestão de Eventos";
+}
+
+<div class="container mt-4 fade-in-up">
+    <div class="d-flex justify-content-between align-items-end mb-4">
+        <div>
+            <h2 class="text-apae-blue mb-1">Eventos Cadastrados</h2>
+            <p class="text-muted mb-0">Controle, edição e exclusão de eventos do portal.</p>
+        </div>
+        <div class="d-flex gap-2">
+            <a asp-action="Create" class="btn btn-apae-primary btn-sm px-4 rounded-pill d-flex align-items-center">Novo Evento</a>
+            <a asp-controller="Admin" asp-action="Dashboard" class="btn btn-apae-outline btn-sm px-4 rounded-pill d-flex align-items-center">Voltar</a>
+        </div>
+    </div>
+
+    <div class="card-soft overflow-hidden" style="border: 1px solid var(--apae-green);">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="bg-light">
+                    <tr>
+                        <th class="text-muted small text-uppercase py-3 ps-4">Título do Evento</th>
+                        <th class="text-muted small text-uppercase py-3">Data Prevista</th>
+                        <th class="text-muted small text-uppercase py-3">Status</th>
+                        <th class="text-muted small text-uppercase py-3 text-end pe-4">Ações</th>
+                    </tr>
+                </thead>
+                <tbody class="border-top-0">
+                    @if (Model.Count == 0)
+                    {
+                        <tr>
+                            <td colspan="4" class="text-center text-muted py-5">Nenhum evento registrado no sistema.</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var ev in Model)
+                        {
+                            <tr>
+                                <td class="ps-4 fw-bold text-dark">@ev.Title</td>
+                                <td class="text-secondary">@ev.Date</td>
+                                <td>
+                                    <span class="badge @(ev.Status == Core.Enums.EventStatus.Ativo ? "bg-success" : ev.Status == Core.Enums.EventStatus.Finalizado ? "bg-secondary" : "bg-danger") rounded-pill px-3">
+                                        @ev.Status
+                                    </span>
+                                </td>
+                                <td class="text-end pe-4">
+                                    <a asp-action="Update" asp-route-id="@ev.Id" class="btn btn-sm btn-outline-primary fw-bold rounded-pill px-3">Editar</a>
+                                    <a asp-action="Delete" asp-route-id="@ev.Id" class="btn btn-sm btn-outline-danger fw-bold rounded-pill px-3 ms-1">Excluir</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
